@@ -1,0 +1,8 @@
+com\fx\controller\MyCotroller.class
+com\fx\ShiroApplication.class
+com\fx\config\ShiroConfig.class
+com\fx\service\UserService.class
+com\fx\service\impl\UserServiceImpl.class
+com\fx\pojo\User.class
+com\fx\realm\MyRealm.class
+com\fx\mapper\UserMapper.class
