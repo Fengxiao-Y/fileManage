@@ -29,14 +29,14 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         //1.获取用户的身份
-        String uname = token.getPrincipal().toString();
+        String account = token.getPrincipal().toString();
         //2.调用业务层获取个人信息（查数据库）
-        User user = userService.selUserInfoService(uname);
+        User user = userService.selUserInfoService(account);
         //3.判断，并将数据封装
         if(user!=null){
             System.out.println("自定义的myRealm执行。。。。。。");
             AuthenticationInfo info = new SimpleAuthenticationInfo(token.getPrincipal(),user.getPwd(),
-                    ByteSource.Util.bytes("yfx"),token.getPrincipal().toString());
+                    ByteSource.Util.bytes(account),token.getPrincipal().toString());
             return info;
         }
         return null;

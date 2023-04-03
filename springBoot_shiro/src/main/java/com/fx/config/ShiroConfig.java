@@ -2,6 +2,7 @@ package com.fx.config;
 
 import com.fx.realm.MyRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,14 +25,20 @@ public class ShiroConfig {
         //将MD5对象存储到myRealm对象中
         myRealm.setCredentialsMatcher(macther);
         //将自定义的MyRealm赋值给defaultWebSecurityManager对象
+        defaultWebSecurityManager.setRealm(myRealm);
         //2.返回defaultWebSecurityManager对象
         return defaultWebSecurityManager;
     }
 
     //配置shiro内置拦截器
-    /*@Bean
-    public DefaultShiroFilterDefinition shiroFilterChainDefinition(){
-
-        return null;
-    }*/
+    @Bean
+    public DefaultShiroFilterChainDefinition shiroFilterChainDefinition(){
+        DefaultShiroFilterChainDefinition definition = new DefaultShiroFilterChainDefinition();
+        //设置不认证可以访问的资源
+        definition.addPathDefinition("/myController/userLogin","anon");
+        definition.addPathDefinition("/myController/login","anon");
+        //设置需要进行登录认证的拦截范围
+        definition.addPathDefinition("/**","authc");
+        return definition;
+    }
 }
