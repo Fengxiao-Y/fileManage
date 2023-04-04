@@ -31,6 +31,9 @@ public class MyCotroller {
         //响应结果
         //获取Subject对象
         Subject subject = SecurityUtils.getSubject();
+        if(rm==null){
+            rm = false;
+        }
         //封装请求数据到token对象中
         AuthenticationToken token = new UsernamePasswordToken(account,pwd,rm);
         try {
