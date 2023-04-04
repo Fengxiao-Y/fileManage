@@ -3,7 +3,9 @@ package com.fx.config;
 import com.fx.realm.MyRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,8 +28,29 @@ public class ShiroConfig {
         myRealm.setCredentialsMatcher(macther);
         //将自定义的MyRealm赋值给defaultWebSecurityManager对象
         defaultWebSecurityManager.setRealm(myRealm);
+        //设置rememberMe功能的Cookie
+        defaultWebSecurityManager.setRememberMeManager(rememberMeManager());
         //2.返回defaultWebSecurityManager对象
         return defaultWebSecurityManager;
+    }
+
+    //创建自定义的Cookie
+    public SimpleCookie rememberMeCookie(){
+        SimpleCookie cookie = new SimpleCookie("rememberMe");
+//        cookie跨域时使用（分布式）
+//        cookie.setDomain(domain);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(30*24*60*60);
+        return cookie;
+    }
+
+    //创建shiro的cookie管理对象
+    public CookieRememberMeManager rememberMeManager(){
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        cookieRememberMeManager.setCookie(rememberMeCookie());
+        cookieRememberMeManager.setCipherKey("cookieKey".getBytes());
+        return cookieRememberMeManager;
     }
 
     //配置shiro内置拦截器
@@ -39,6 +62,7 @@ public class ShiroConfig {
         definition.addPathDefinition("/myController/login","anon");
         //设置需要进行登录认证的拦截范围
         definition.addPathDefinition("/**","authc");
+        definition.addPathDefinition("/**","user");
         return definition;
     }
 }

@@ -25,14 +25,14 @@ public class MyCotroller {
 
     @RequestMapping("userLogin")
 //    @ResponseBody
-    public String userLogin(String account, String pwd, HttpSession session){
+    public String userLogin(String account, String pwd, Boolean rm, HttpSession session){
         System.out.println("登录认证单元方法执行："+account+"=="+pwd);
         //处理请求
         //响应结果
         //获取Subject对象
         Subject subject = SecurityUtils.getSubject();
         //封装请求数据到token对象中
-        AuthenticationToken token = new UsernamePasswordToken(account,pwd);
+        AuthenticationToken token = new UsernamePasswordToken(account,pwd,rm);
         try {
             subject.login(token);
             session.setAttribute("user",token.getPrincipal().toString());
