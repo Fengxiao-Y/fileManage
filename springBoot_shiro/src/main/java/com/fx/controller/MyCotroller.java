@@ -4,10 +4,12 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -25,15 +27,12 @@ public class MyCotroller {
 
     @RequestMapping("userLogin")
 //    @ResponseBody
-    public String userLogin(String account, String pwd, Boolean rm, HttpSession session){
+    public String userLogin(String account, String pwd, @RequestParam(defaultValue = "false") Boolean rm, HttpSession session){
         System.out.println("登录认证单元方法执行："+account+"=="+pwd);
         //处理请求
         //响应结果
         //获取Subject对象
         Subject subject = SecurityUtils.getSubject();
-        if(rm==null){
-            rm = false;
-        }
         //封装请求数据到token对象中
         AuthenticationToken token = new UsernamePasswordToken(account,pwd,rm);
         try {
@@ -47,6 +46,7 @@ public class MyCotroller {
         }
     }
 
+    @RequiresRoles("admin")
     @RequestMapping("userLogin2")
     @ResponseBody
     public String userLogin2(String account,String pwd){
