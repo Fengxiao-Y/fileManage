@@ -1,5 +1,6 @@
 package com.fx.config;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.fx.realm.MyRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
@@ -66,5 +67,11 @@ public class ShiroConfig {
         definition.addPathDefinition("/**","authc");
         definition.addPathDefinition("/**","user");
         return definition;
+    }
+
+    //页面按钮拦截器
+    @Bean
+    public ShiroDialect shiroDialect(){
+        return new ShiroDialect();
     }
 }

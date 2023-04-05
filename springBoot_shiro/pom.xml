@@ -51,6 +51,7 @@
             <artifactId>shiro-web</artifactId>
             <version>1.4.0</version>
         </dependency>
+        <!--配置Thymeleaf和shiro的整合依赖-->
         <dependency>
             <groupId>com.github.theborakompanioni</groupId>
             <artifactId>thymeleaf-extras-shiro</artifactId>
