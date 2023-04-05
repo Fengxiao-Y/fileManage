@@ -20,9 +20,15 @@ public class UserServiceImpl implements UserService {
         return userMapper.selUserInfoByAccount(account);
     }
 
-    //获取用户的角色权限
+    //获取用户角色信息
     @Override
     public List<String> selUserRolesInfo(String account) {
         return userMapper.seluserRolesByAccount(account);
+    }
+
+    //获取用户权限信息
+    @Override
+    public List<String> selUserPsInfo(String account) {
+        return userMapper.seluserPsInfoByAccount(account);
     }
 }

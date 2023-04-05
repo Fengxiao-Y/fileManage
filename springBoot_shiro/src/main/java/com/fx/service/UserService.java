@@ -9,6 +9,8 @@ import java.util.List;
 public interface UserService {
     //用户登录
     User selUserInfo(String account);
-    //获取用户角色权限
+    //获取用户角色信息
     List<String> selUserRolesInfo(String account);
+    //获取用户权限信息
+    List<String> selUserPsInfo(String account);
 }

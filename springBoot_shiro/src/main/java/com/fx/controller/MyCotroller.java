@@ -4,6 +4,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.http.HttpRequest;
@@ -52,5 +53,13 @@ public class MyCotroller {
     public String userLogin2(String account,String pwd){
         System.out.println("登录认证单元方法执行："+account+"=="+pwd);
         return "大傻逼";
+    }
+
+    @RequiresPermissions("user:delete")
+    @RequestMapping("userDemo")
+    @ResponseBody
+    public String userDemo(){
+        System.out.println("授权访问的方法，完成权限认证");
+        return "小傻逼";
     }
 }

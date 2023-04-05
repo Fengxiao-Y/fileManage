@@ -32,11 +32,16 @@ public class MyRealm extends AuthorizingRealm {
         //调用业务层获取用户的角色信息
         List<String> roles = (List<String>) userService.selUserRolesInfo(principal);
         System.out.println("当前查询的用户的角色信息为：" + roles);
+        //调用业务层获取用户的权限信息
+        List<String> ps = (List<String >)userService.selUserPsInfo(principal);
+        System.out.println("当前查询的用户的权限信息为：" + ps);
         //创建对象，存储当前登录用户的权限和角色
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //存储角色
 //        info.addRole("admin");
         info.addRoles(roles);
+        //存储权限
+        info.addStringPermissions(ps);
         return info;
     }
 
