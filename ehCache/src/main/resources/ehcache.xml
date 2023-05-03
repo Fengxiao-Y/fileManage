@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+    <!--磁盘缓存位置-->
+    <diskStore path="java.io.tmpdir/ehcahe"/>
+    <!--默认缓存-->
+    <defaultCache
+            maxEntriesLocalHeap="1000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            maxEntriesLocalDisk="10000000"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap"/>
+    </defaultCache>
+    <!--helloWord缓存-->
+    <defaultCache
+            name="HelloWordCache"
+            maxEntriesLocalHeap="1000"
+            eternal="false"
+            timeToIdleSeconds="5"
+            timeToLiveSeconds="5"
+            maxEntriesLocalDisk="10000000"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+    </defaultCache>
+</ehcache>
+<!--maxEntriesLocalHeap：缓存中允许创建的最大对象数量-->
+<!--eternal：缓存中对象是否为永久，如果是，超时设置将被忽略，对象从不过期-->
+<!--timeToIdleSeconds：缓存数据的钝化时间，取0表示无限长-->
+<!--timeToLiveSeconds：缓存数据的生存时间，取0表示无限长-->
+<!--overflowToDisk：内存不足时，是否启用磁盘缓存-->
+<!--memoryStoreEvictionPolicy：缓存满了之后的淘汰算法-->
