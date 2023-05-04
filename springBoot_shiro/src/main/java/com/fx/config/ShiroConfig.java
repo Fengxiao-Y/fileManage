@@ -2,7 +2,10 @@ package com.fx.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.fx.realm.MyRealm;
+import net.sf.ehcache.CacheManager;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.io.ResourceUtils;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -10,6 +13,11 @@ import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.transaction.config.TransactionManagementConfigUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 @Configuration
 public class ShiroConfig {
@@ -18,6 +26,8 @@ public class ShiroConfig {
     private MyRealm myRealm;
     //1.声明方法：配置SecurityManager
     @Bean
+    //@DependsOn(TransactionManagementConfigUtils.TRANSACTION_ADVISOR_BEAN_NAME)    //基于JDK的动态代理模式
+    //@DependsOn(TransactionManagementConfigUtils.TRANSACTION_ASPECT_BEAN_NAME)   //cglib切面动态代理模式
     public DefaultWebSecurityManager defaultWebSecurityManager(){
         //1.创建defaultWebSecurityManager对象
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
@@ -31,8 +41,24 @@ public class ShiroConfig {
         defaultWebSecurityManager.setRealm(myRealm);
         //设置rememberMe功能的Cookie
         defaultWebSecurityManager.setRememberMeManager(rememberMeManager());
+        //设置CacheManager对象
+        defaultWebSecurityManager.setCacheManager(ehCacheManager());
         //2.返回defaultWebSecurityManager对象
         return defaultWebSecurityManager;
+    }
+
+    //将ehcache缓存给shiro cacheManager管理
+    public EhCacheManager ehCacheManager(){
+        EhCacheManager ehCacheManager = new EhCacheManager();
+        InputStream is = null;
+        try {
+            is = ResourceUtils.getInputStreamForPath("classpath:ehcache/ehcache-shiro.xml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        net.sf.ehcache.CacheManager cacheManager = new net.sf.ehcache.CacheManager(is);
+        ehCacheManager.setCacheManager(cacheManager);
+        return ehCacheManager;
     }
 
     //创建自定义的Cookie
@@ -74,4 +100,5 @@ public class ShiroConfig {
     public ShiroDialect shiroDialect(){
         return new ShiroDialect();
     }
+
 }

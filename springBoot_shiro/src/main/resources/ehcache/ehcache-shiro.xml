@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache name="ehcache" updateCheck="false">
+    <!--磁盘缓存位置-->
+    <diskStore path="java.io.tmpdir"/>
+    <!--默认缓存-->
+    <defaultCache
+            maxEntriesLocalHeap="1000"
+            eternal="false"
+            timeToIdleSeconds="3600"
+            timeToLiveSeconds="3600"
+            overflowToDisk="false">
+        <persistence strategy="localTempSwap"/>
+    </defaultCache>
+    <!--记录用户授权信息缓存:缓存用户的角色和权限 锁定10分钟-->
+    <defaultCache
+            name="authorizationInfo"
+            maxEntriesLocalHeap="2000"
+            eternal="false"
+            timeToIdleSeconds="600"
+            timeToLiveSeconds="0"
+            overflowToDisk="false"
+            statistics="true">
+    </defaultCache>
+</ehcache>
+        <!--maxEntriesLocalHeap：缓存中允许创建的最大对象数量-->
+        <!--eternal：缓存中对象是否为永久，如果是，超时设置将被忽略，对象从不过期-->
+        <!--timeToIdleSeconds：缓存数据的钝化时间，取0表示无限长-->
+        <!--timeToLiveSeconds：缓存数据的生存时间，取0表示无限长-->
+        <!--overflowToDisk：内存不足时，是否启用磁盘缓存-->
+        <!--memoryStoreEvictionPolicy：缓存满了之后的淘汰算法-->

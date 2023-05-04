@@ -25,6 +25,8 @@ public class MyRealm extends AuthorizingRealm {
     //自定义授权方法，获取当前登录认证通过的用户的权限信息，返回给shiro使用，shiro来完成授权比对
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        //从EhCache中获取
+
         System.out.println("执行自定义授权的方法");
         //获取当前授权用户的身份信息
         String principal = principalCollection.getPrimaryPrincipal().toString();
@@ -42,6 +44,8 @@ public class MyRealm extends AuthorizingRealm {
         info.addRoles(roles);
         //存储权限
         info.addStringPermissions(ps);
+        //重新缓存数据到EhCache
+
         return info;
     }
 

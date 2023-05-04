@@ -25,6 +25,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="springBoot_shiro-1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:2.3.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.3.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.3.1.RELEASE" level="project" />
@@ -89,5 +90,9 @@
     <orderEntry type="library" name="Maven: org.apache.shiro:shiro-spring-boot-web-starter:1.4.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.shiro:shiro-spring-boot-starter:1.4.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.3.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.ehcache:ehcache-core:2.6.11" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.ehcache:ehcache-terracotta:2.6.11" level="project" />
+    <orderEntry type="library" name="Maven: org.terracotta:terracotta-toolkit-1.6-runtime:5.10.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-ehcache:1.2.5" level="project" />
   </component>
 </module>
