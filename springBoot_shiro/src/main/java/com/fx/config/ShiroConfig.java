@@ -1,6 +1,7 @@
 package com.fx.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import com.fx.matcher.MyMatcher;
 import com.fx.realm.MyRealm;
 import net.sf.ehcache.CacheManager;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -22,17 +23,22 @@ public class ShiroConfig {
     //声明自定义的realm属性
     @Autowired
     private MyRealm myRealm;
+    //声明自定义的凭证匹配器
+    @Autowired
+    private MyMatcher myMatcher;
     //1.声明方法：配置SecurityManager
     @Bean
     public DefaultWebSecurityManager defaultWebSecurityManager(){
         //1.创建defaultWebSecurityManager对象
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         //创建MD5加密对象，并设置相关属性
-        HashedCredentialsMatcher macther = new HashedCredentialsMatcher();
+        /*HashedCredentialsMatcher macther = new HashedCredentialsMatcher();
         macther.setHashAlgorithmName("md5");
-        macther.setHashIterations(2);
+        macther.setHashIterations(2);*/
+        myMatcher.setHashAlgorithmName("md5");
+        myMatcher.setHashIterations(2);
         //将MD5对象存储到myRealm对象中
-        myRealm.setCredentialsMatcher(macther);
+        myRealm.setCredentialsMatcher(myMatcher);
         //将自定义的MyRealm赋值给defaultWebSecurityManager对象
         defaultWebSecurityManager.setRealm(myRealm);
         //设置rememberMe功能的Cookie
@@ -44,6 +50,7 @@ public class ShiroConfig {
     }
 
     //将ehcache缓存给shiro cacheManager管理
+    @Bean
     public EhCacheManager ehCacheManager(){
         EhCacheManager ehCacheManager = new EhCacheManager();
         InputStream is = null;

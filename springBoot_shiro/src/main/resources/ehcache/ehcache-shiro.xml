@@ -12,7 +12,7 @@
     </defaultCache>
     <!--记录用户授权信息缓存:缓存用户的角色和权限 锁定10分钟-->
     <cache
-            name="authorizationInfo"
+            name="passwordRetryEhcache"
             maxEntriesLocalHeap="2000"
             eternal="false"
             timeToIdleSeconds="600"

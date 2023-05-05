@@ -43,7 +43,7 @@ public class MyCotroller {
             return "main";
         } catch (AuthenticationException e){
             System.out.println("登录失败");
-            return "登录失败";
+            return "loginError";
         }
     }
 
