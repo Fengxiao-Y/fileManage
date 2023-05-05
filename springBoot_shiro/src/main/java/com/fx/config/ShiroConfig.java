@@ -13,8 +13,6 @@ import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.transaction.config.TransactionManagementConfigUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,8 +24,6 @@ public class ShiroConfig {
     private MyRealm myRealm;
     //1.声明方法：配置SecurityManager
     @Bean
-    //@DependsOn(TransactionManagementConfigUtils.TRANSACTION_ADVISOR_BEAN_NAME)    //基于JDK的动态代理模式
-    //@DependsOn(TransactionManagementConfigUtils.TRANSACTION_ASPECT_BEAN_NAME)   //cglib切面动态代理模式
     public DefaultWebSecurityManager defaultWebSecurityManager(){
         //1.创建defaultWebSecurityManager对象
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
@@ -56,7 +52,7 @@ public class ShiroConfig {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        net.sf.ehcache.CacheManager cacheManager = new net.sf.ehcache.CacheManager(is);
+        CacheManager cacheManager = new CacheManager(is);
         ehCacheManager.setCacheManager(cacheManager);
         return ehCacheManager;
     }
